@@ -10,6 +10,7 @@ const ChatBox = props => {
                     key={key}
                     message={msg.message}
                     author={msg.author}
+                    datetime={new Date(msg.datetime).toDateString() + ' |***| ' + new Date(msg.datetime).toLocaleTimeString()}
                 />
             ))}
         </ol>
