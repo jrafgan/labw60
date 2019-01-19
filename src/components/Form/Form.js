@@ -24,12 +24,12 @@ class Form extends Component {
 
     render() {
         return (
-            <form onSubmit={event => this.submitForm(event)}>
+            <form onSubmit={this.submitForm}>
                 <label htmlFor="message">Messsage:</label>
-                <input type="text" id="message" placeholder="Some message ..." onChange={(event) => this.updateMessage(event)} />
+                <input type="text" id="message" placeholder="Some message ..." onChange={this.updateMessage} />
 
                 <label htmlFor="author">Author:</label>
-                <input type="text" id="author" placeholder="Student" onChange={event => this.updateAuthor(event)}/>
+                <input type="text" id="author" placeholder="Student" onChange={this.updateAuthor}/>
                 <button type="submit" id="btn-addMsg">Send</button>
             </form>
         );
