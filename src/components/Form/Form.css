@@ -5,13 +5,28 @@ form {
     bottom: 0;
     right: 0;
     background: #37474f;
-    width: 40%;
+    width: 55%;
     color: #fff;
 }
+
+form label {
+    margin-right: 5px;
+}
 form input {
+    margin-right: 20px;
     padding: 5px 10px;
 }
 
-form #author {
+@media screen and (max-width: 1495px){
+    form {
+        width: 100%;
+        z-index: 100;
+    }
+}
 
+@media screen and (max-width: 750px){
+    form {
+        position: relative;
+        width: 750px;
+    }
 }

@@ -3,10 +3,9 @@ import Message from "../Message/Message";
 import './ChatBox.css';
 
 const ChatBox = props => {
-    const messages = props.messages.reverse();
     return (
         <ol className="chatBox">
-            {messages.map((msg, key) =>(
+            {props.messages.map((msg, key) =>(
                 <Message
                     key={key}
                     message={msg.message}

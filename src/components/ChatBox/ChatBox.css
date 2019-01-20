@@ -3,3 +3,8 @@
     display: inline-block;
 }
 
+@media screen and (max-width: 1495px){
+    .chatBox {
+        margin: 20px 0 65px 50px;
+    }
+}

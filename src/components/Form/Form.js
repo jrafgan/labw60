@@ -30,7 +30,7 @@ class Form extends Component {
 
                 <label htmlFor="author">Author:</label>
                 <input type="text" id="author" placeholder="Student" onChange={event => this.updateAuthor(event)}/>
-                <button type="submit" id="btn-addMsg">Send</button>
+                <button type="submit" id="btn-addMsg" className="btn btn-info">Send</button>
             </form>
         );
     }

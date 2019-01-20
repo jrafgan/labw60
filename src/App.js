@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import Form from "./components/Form/Form";
 import ChatBox from "./components/ChatBox/ChatBox";
+
+import './App.css';
 
 class App extends Component {
     state = {
@@ -25,10 +26,9 @@ class App extends Component {
             throw new Error('Request failed');
         }).then(result => {
             if (result.length !== 0) {
-                const messages = [
-                    ...this.state.messages,
-                    ...result
-                ];
+                let newData = [...result];
+                newData = newData.reverse();
+                const messages = newData.concat(this.state.messages);
                 const datetime = result[result.length - 1].datetime;
                 this.setState({messages, datetime});
             }
@@ -43,7 +43,7 @@ class App extends Component {
 
     componentWillUnmount() {
         clearInterval(this.interval)
-    }
+    };
 
     publishMessage = (formData) => {
         const data = new URLSearchParams();
@@ -52,7 +52,7 @@ class App extends Component {
         fetch(this.endpointURL, {
            method: 'POST',
            body: data,
-        }).then();
+        })
     };
 
   render() {
