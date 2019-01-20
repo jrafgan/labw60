@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Form from "./components/Form/Form";
 import ChatBox from "./components/ChatBox/ChatBox";
@@ -6,61 +6,71 @@ import ChatBox from "./components/ChatBox/ChatBox";
 class App extends Component {
     state = {
         messages: [],
-        datetime: null,
+        datetime: null
     };
 
     endpointURL = 'http://146.185.154.90:8000/messages';
+    interval = null;
 
-    componentDidMount() {
-        this.fetchIt();
-    };
+    getNewMessages(datetime = this.state.datetime) {
+        console.log('[Method] getNewMessages()');
+        let url = this.endpointURL;
+        if (datetime !== null) {
+            url = this.endpointURL + '?datetime=' + datetime;
+            console.log('[Datetime]', datetime);
+            console.log('[URL]', url);
+        }
 
-    fetchIt() {
-        fetch(this.endpointURL).then(response => {
+        fetch(url).then(response => {
             if (response.ok) {
                 return response.json();
             }
             throw new Error('Request failed');
-        }).then(messages => {
-            let copy1 = this.state.messages;
-            let copy2 = this.state.datetime;
-            copy2 = messages[messages.length - 1].datetime;
-            copy1 = messages;
-            this.setState({messages: copy1, datetime: copy2});
+        }).then(result => {
+            console.log('[Result]', result);
+            if (result.length !== 0) {
+                console.log('[DATA]', result);
+                const messages = [
+                    ...this.state.messages,
+                    ...result
+                ];
+                const datetime = result[result.length - 1].datetime;
+                this.setState({messages, datetime});
+            }
+
+            console.log('[State]', this.state.messages);
         });
     };
 
-    interval = setInterval(() => {
-        this.fetchIt();
-    }, 3000);
+    componentDidMount() {
+        this.interval = setInterval(() => {
+            this.getNewMessages()
+        }, 3000);
+        console.log('Interval:', this.interval);
+    };
 
     componentWillUnmount() {
         clearInterval(this.interval)
     }
 
-    someHandler = (formData) => {
+    publishMessage = (formData) => {
         const data = new URLSearchParams();
         data.set('message', formData.message);
         data.set('author', formData.author);
-        this.componentWillUnmount();
         fetch(this.endpointURL, {
-            method: 'POST',
-            body: data,
-        }).then(()=>{
-            this.interval=setInterval(() => {
-                this.fetchIt();
-            }, 3000);
-        });
+           method: 'POST',
+           body: data,
+        }).then(console.log('New message published'));
     };
 
-    render() {
-        return (
-            <div className="App">
-                <Form publishMessage={this.someHandler}/>
-                <ChatBox messages={this.state.messages}/>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div className="App">
+        <Form publishMessage={this.publishMessage} />
+          <ChatBox messages={this.state.messages}/>
+      </div>
+    );
+  }
 }
 
 export default App;

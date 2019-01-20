@@ -1,18 +1,17 @@
-form{
+form {
     text-align: right;
-    padding: 10px 0;
+    padding: 10px 10px;
     position: fixed;
-    bottom: 0px;
-    width: 100%;
-    background: #4db6ac;
+    bottom: 0;
+    right: 0;
+    background: #37474f;
+    width: 40%;
+    color: #fff;
 }
-input {
+form input {
     padding: 5px 10px;
 }
-.author {
-    color: red;
-    font-weight: bold;
-}
-span {
-    margin: 0 10px;
+
+form #author {
+
 }
